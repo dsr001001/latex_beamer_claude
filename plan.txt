@@ -1,0 +1,133 @@
+Plan: Create Beamer-Style Slides via Python (No LaTeX/Beamer Install)
+======================================================================
+
+CONTEXT
+-------
+Recreate the same 4-slide PDF presentation about the India-Canada Summit
+(PM Modi & Mark Carney talks, March 2, 2026) entirely through Python,
+without installing LaTeX or Beamer.
+
+System findings:
+- Python 3.11.14 available
+- LibreOffice 24.2.7 already installed at /usr/bin/libreoffice
+- None of reportlab, fpdf2, python-pptx, weasyprint, pillow are pre-installed
+- Existing files: slides.tex, slides.pdf, build.sh, .gitignore (from previous LaTeX approach)
+
+
+APPROACH: python-pptx -> LibreOffice PDF
+-----------------------------------------
+Why this approach:
+- python-pptx is a pure pip-installable library; creates real PowerPoint-format
+  .pptx slides with proper layouts, themes, and formatting -- the closest Python
+  equivalent to Beamer slides.
+- LibreOffice is already installed (no new system packages needed) and can
+  headlessly convert .pptx -> .pdf reliably.
+- No LaTeX/Beamer involved at all; the entire pipeline is:
+    pip install python-pptx -> Python script -> LibreOffice conversion
+
+
+SLIDE PLAN (same 4 slides as previous LaTeX version)
+------------------------------------------------------
+1. Title Slide
+   - "India-Canada Summit: A New Chapter"
+   - March 2, 2026 | Hyderabad House, New Delhi
+
+2. Key Highlights
+   - India-Canada Defence Dialogue established
+   - Bilateral trade target: $50 billion by 2030
+   - CEPA (Comprehensive Economic Partnership Agreement) to be expedited
+   - Close cooperation on terrorism, extremism, and radicalization
+
+3. Economic & Strategic Outcomes
+   - Three agreements signed: Critical Minerals, Renewable Energy, Culture
+   - Clean energy and fintech identified as defining cooperation pillars
+   - Leaders attended India-Canada CEOs Forum
+   - Energy cooperation as a cornerstone of the renewed relationship
+
+4. A New Chapter in Relations
+   - PM Carney's first full-fledged bilateral visit to India (Feb 26 - Mar 7, 2026)
+   - Built on earlier meetings:
+       * G7 Summit, Kananaskis, Canada (June 2025)
+       * G20 Summit, Johannesburg, South Africa (November 2025)
+   - PM Carney: "Canada is renewing its relationship with India and expanding
+     its ties, building a strong foundation in trade, defence, and energy"
+   - Visit marks an inflection point in the India-Canada Strategic Partnership
+
+
+BRANCH
+------
+New branch: claude/python-slides-wP8kb
+(branched from claude/create-beamer-slides-wP8kb to inherit history)
+
+
+IMPLEMENTATION STEPS
+--------------------
+
+Step 1: Create new branch
+    git checkout -b claude/python-slides-wP8kb
+
+Step 2: Install python-pptx
+    pip install python-pptx
+
+Step 3: Write create_slides.py
+    Python script that:
+    - Creates a Presentation() with widescreen layout (13.33" x 7.5")
+    - Uses a dark/professional color scheme similar to Beamer's Madrid theme
+      (dark blue header, white background)
+    - Slide 1: Title layout -- big title, subtitle, date/location as footer text
+    - Slides 2-4: Content layout -- slide title + bullet points via text_frame
+      with nested add_paragraph() for sub-bullets
+    - Saves as slides_python.pptx
+
+    Key python-pptx API used:
+    - prs = Presentation()
+    - prs.slide_width / slide_height for dimensions
+    - slide = prs.slides.add_slide(layout) with blank layout (index 6)
+    - slide.shapes.add_textbox(left, top, width, height) for text areas
+    - tf.text_frame.paragraphs[0].font for styling
+    - prs.save('slides_python.pptx')
+
+Step 4: Write build_python.sh
+    #!/bin/bash
+    pip install python-pptx
+    python3 create_slides.py
+    libreoffice --headless --convert-to pdf slides_python.pptx
+    echo "Done: slides_python.pdf"
+
+Step 5: Run build_python.sh to produce slides_python.pdf
+
+Step 6: Commit and push to claude/python-slides-wP8kb
+    Files to commit:
+    - create_slides.py
+    - build_python.sh
+    - slides_python.pptx
+    - slides_python.pdf
+    Update .gitignore to exclude __pycache__/
+
+
+CRITICAL FILES
+--------------
+- create_slides.py    -- Python slide-generation script
+- build_python.sh     -- build script (pip install + python + libreoffice convert)
+- slides_python.pptx  -- generated PPTX (intermediate artifact)
+- slides_python.pdf   -- final PDF output (4 pages)
+- .gitignore          -- update to add __pycache__/
+- plan.txt            -- this file
+
+
+VERIFICATION
+------------
+1. python3 -c "import pptx; print('ok')"
+   -> confirm python-pptx installed
+
+2. python3 create_slides.py
+   -> confirm slides_python.pptx created with no errors
+
+3. libreoffice --headless --convert-to pdf slides_python.pptx
+   -> confirm PDF created
+
+4. pdfinfo slides_python.pdf | grep Pages
+   -> should show: Pages: 4
+
+5. git push -u origin claude/python-slides-wP8kb
+   -> confirm push succeeds
