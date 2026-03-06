@@ -8,17 +8,24 @@
 \RequirePackage{fontspec}
 
 % ── Fonts ─────────────────────────────────────────────────────────────────────
+% Calibri is preferred (standard on Windows/Office); falls back to
+% TeX Gyre Heros (Helvetica clone, ships with texlive) on Linux systems.
 \usefonttheme{default}
-\setmainfont{Calibri}[
-  BoldFont = Calibri Bold,
-  ItalicFont = Calibri Italic,
-  BoldItalicFont = Calibri Bold Italic
-]
-\setsansfont{Calibri}[
-  BoldFont = Calibri Bold,
-  ItalicFont = Calibri Italic,
-  BoldItalicFont = Calibri Bold Italic
-]
+\IfFontExistsTF{Calibri}{%
+  \setmainfont{Calibri}[
+    BoldFont      = Calibri Bold,
+    ItalicFont    = Calibri Italic,
+    BoldItalicFont = Calibri Bold Italic
+  ]
+  \setsansfont{Calibri}[
+    BoldFont      = Calibri Bold,
+    ItalicFont    = Calibri Italic,
+    BoldItalicFont = Calibri Bold Italic
+  ]
+}{%
+  \setmainfont{TeX Gyre Heros}
+  \setsansfont{TeX Gyre Heros}
+}
 
 \setbeamerfont{title}{size=\Large, series=\bfseries, family=\sffamily}
 \setbeamerfont{subtitle}{size=\normalsize, series=\mdseries, family=\sffamily}

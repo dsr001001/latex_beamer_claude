@@ -20,8 +20,28 @@
   pdfborder  = {0 0 0}
 }
 
-% ── Suppress Beamer nav if accidentally included outside theme ─────────────
-% (harmless if theme already handles this)
-\@ifundefined{setbeamertemplate}{}{%
-  \setbeamertemplate{navigation symbols}{}%
-}
+% ── Fonts (report PDF only; Beamer theme handles its own font setup) ──────────
+% Only runs outside Beamer. Explicitly load fontspec so \IfFontExistsTF is
+% available regardless of whether pandoc's template loaded it already.
+\ifdefined\beamer@version\else
+  \usepackage{fontspec}
+  \IfFontExistsTF{Calibri}{%
+    \setmainfont{Calibri}[
+      BoldFont      = Calibri Bold,
+      ItalicFont    = Calibri Italic,
+      BoldItalicFont = Calibri Bold Italic
+    ]
+    \setsansfont{Calibri}[
+      BoldFont      = Calibri Bold,
+      ItalicFont    = Calibri Italic,
+      BoldItalicFont = Calibri Bold Italic
+    ]
+  }{%
+    % Calibri not found — use TeX Gyre Heros (Helvetica clone, ships with texlive)
+    \setmainfont{TeX Gyre Heros}
+    \setsansfont{TeX Gyre Heros}
+  }
+\fi
+
+% Navigation symbols are suppressed by the Beamer theme itself.
+% No action needed here; the theme's \setbeamertemplate call handles it.

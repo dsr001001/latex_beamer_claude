@@ -73,8 +73,6 @@ Why customers relegate our card after the initial promotional period:
 4. **No recurring payment capture** — direct debits and standing orders not prompted
    at onboarding
 
-![](assets/logo.png){ width=15% }
-
 > *"We win acquisition, then watch the customer put the card in the drawer."*
 > — Head of Cards, internal strategy review, 2025
 

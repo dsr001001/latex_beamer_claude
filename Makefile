@@ -55,7 +55,6 @@ rpdf: $(REPORT_SRC)
 	@mkdir -p $(OUTPUT)
 	pandoc $(REPORT_SRC) -o $(OUTPUT)/report.pdf \
 		-V geometry:margin=2.54cm \
-		-V mainfont:Calibri \
 		-V fontsize:11pt \
 		-H $(PREAMBLE) \
 		--pdf-engine=xelatex \
