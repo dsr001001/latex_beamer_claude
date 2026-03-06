@@ -1,6 +1,27 @@
+# Generated output
+output/
+
+# LaTeX build artefacts
 *.aux
 *.log
 *.nav
 *.out
 *.snm
 *.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+
+# Generated template files (created by make init-templates)
+# Uncomment if you want to track them in git:
+# templates/deck-template.pptx
+# templates/report-template.docx
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+*.swp
+*~

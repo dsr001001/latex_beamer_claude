@@ -1,0 +1,27 @@
+% latex-preamble.tex
+% Shared LaTeX preamble included in all deckpipe PDF outputs.
+% Passed to pandoc via -H (--include-in-header).
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+% ── Palette ───────────────────────────────────────────────────────────────────
+\definecolor{dpNavy}{HTML}{003A70}
+\definecolor{dpMidBlue}{HTML}{0077B6}
+\definecolor{dpTeal}{HTML}{00B4D8}
+
+% ── Hyperlinks ────────────────────────────────────────────────────────────────
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = dpNavy,
+  urlcolor   = dpMidBlue,
+  citecolor  = dpTeal,
+  pdfborder  = {0 0 0}
+}
+
+% ── Suppress Beamer nav if accidentally included outside theme ─────────────
+% (harmless if theme already handles this)
+\@ifundefined{setbeamertemplate}{}{%
+  \setbeamertemplate{navigation symbols}{}%
+}

@@ -1,0 +1,138 @@
+\ProvidesPackage{beamerthemedeckpipe}[2024/01/01 deckpipe Beamer theme]
+
+% ── Colour theme ──────────────────────────────────────────────────────────────
+\usecolortheme{deckpipe}
+
+% ── Required packages ─────────────────────────────────────────────────────────
+\RequirePackage{tikz}
+\RequirePackage{fontspec}
+
+% ── Fonts ─────────────────────────────────────────────────────────────────────
+\usefonttheme{default}
+\setmainfont{Calibri}[
+  BoldFont = Calibri Bold,
+  ItalicFont = Calibri Italic,
+  BoldItalicFont = Calibri Bold Italic
+]
+\setsansfont{Calibri}[
+  BoldFont = Calibri Bold,
+  ItalicFont = Calibri Italic,
+  BoldItalicFont = Calibri Bold Italic
+]
+
+\setbeamerfont{title}{size=\Large, series=\bfseries, family=\sffamily}
+\setbeamerfont{subtitle}{size=\normalsize, series=\mdseries, family=\sffamily}
+\setbeamerfont{author}{size=\small, family=\sffamily}
+\setbeamerfont{date}{size=\small, family=\sffamily}
+\setbeamerfont{frametitle}{size=\large, series=\bfseries, family=\sffamily}
+\setbeamerfont{framesubtitle}{size=\small, series=\mdseries}
+\setbeamerfont{footline}{size=\tiny, family=\sffamily}
+\setbeamerfont{block title}{size=\small, series=\bfseries}
+
+% ── Navigation: none ──────────────────────────────────────────────────────────
+\setbeamertemplate{navigation symbols}{}
+
+% ── Title page ────────────────────────────────────────────────────────────────
+\setbeamertemplate{title page}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    % Navy accent bar at bottom
+    \fill[dpNavy] (current page.south west)
+      rectangle ([yshift=0.9cm]current page.south east);
+    % Teal accent strip above the bar
+    \fill[dpTeal] ([yshift=0.9cm]current page.south west)
+      rectangle ([yshift=1.05cm]current page.south east);
+  \end{tikzpicture}
+  \vspace{2.2cm}
+  \begin{flushleft}
+    \usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par
+    \vspace{0.4em}
+    \usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par
+    \vspace{0.8em}
+    \usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par
+    \vspace{0.2em}
+    \usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par
+  \end{flushleft}
+}
+
+% ── Frame title with underline rule ───────────────────────────────────────────
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip
+  \begin{beamercolorbox}[
+    wd=\paperwidth,
+    ht=2.6ex,
+    dp=1.0ex,
+    leftskip=0.5cm,
+    rightskip=0.5cm
+  ]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle
+    \ifx\insertframesubtitle\@empty\else
+      \hspace{0.5em}{\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle}
+    \fi
+  \end{beamercolorbox}%
+  \nointerlineskip
+  \begin{tikzpicture}
+    \draw[dpNavy, line width=0.6pt] (0,0) -- (\paperwidth,0);
+  \end{tikzpicture}%
+  \vspace{0.3ex}
+}
+
+% ── Footline: slide number bottom-right ───────────────────────────────────────
+\setbeamertemplate{footline}{%
+  \nointerlineskip
+  \begin{tikzpicture}
+    \draw[dpNavy!30, line width=0.4pt] (0,0) -- (\paperwidth,0);
+  \end{tikzpicture}%
+  \begin{beamercolorbox}[
+    wd=\paperwidth,
+    ht=2.0ex,
+    dp=0.8ex,
+    rightskip=0.5cm
+  ]{footline}%
+    \hfill
+    \usebeamerfont{footline}%
+    \insertshortauthor\quad
+    \insertframenumber\,/\,\inserttotalframenumber
+    \hspace{0.3cm}
+  \end{beamercolorbox}
+}
+
+% ── Itemize bullets ───────────────────────────────────────────────────────────
+\setbeamertemplate{itemize item}{%
+  \usebeamercolor[fg]{itemize item}%
+  \small\raise1.5pt\hbox{\textbullet}%
+}
+\setbeamertemplate{itemize subitem}{%
+  \usebeamercolor[fg]{itemize subitem}%
+  \small\raise1.5pt\hbox{--}%
+}
+\setbeamertemplate{itemize subsubitem}{%
+  \usebeamercolor[fg]{itemize subsubitem}%
+  \scriptsize\raise1.5pt\hbox{\textbullet}%
+}
+
+% ── Block environments ────────────────────────────────────────────────────────
+\setbeamertemplate{block begin}{%
+  \par\vskip0.5em
+  \begin{beamercolorbox}[rounded=false, shadow=false,
+      leftskip=0.4cm, rightskip=0.4cm, ht=2.2ex, dp=0.6ex]{block title}%
+    \usebeamerfont{block title}\insertblocktitle
+  \end{beamercolorbox}%
+  \nointerlineskip
+  \begin{beamercolorbox}[rounded=false, shadow=false,
+      leftskip=0.4cm, rightskip=0.4cm, vmode]{block body}%
+    \vspace{0.4em}
+}
+\setbeamertemplate{block end}{\vspace{0.4em}\end{beamercolorbox}\vskip0.5em}
+
+% ── Section page (optional) ───────────────────────────────────────────────────
+\AtBeginSection[]{%
+  \begin{frame}[plain]
+    \begin{tikzpicture}[remember picture, overlay]
+      \fill[dpNavy] (current page.south west) rectangle (current page.north east);
+    \end{tikzpicture}
+    \begin{center}
+      \vspace{2.5cm}
+      {\Large\bfseries\color{white}\insertsectionhead}
+    \end{center}
+  \end{frame}
+}

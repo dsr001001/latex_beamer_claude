@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="60" viewBox="0 0 240 60">
+  <!-- deckpipe placeholder logo — replace with your own branding -->
+  <rect width="240" height="60" rx="4" fill="#003A70"/>
+  <rect x="0" y="50" width="240" height="4" fill="#00B4D8"/>
+  <text
+    x="16"
+    y="38"
+    font-family="Calibri, Arial, sans-serif"
+    font-size="26"
+    font-weight="bold"
+    fill="white"
+    letter-spacing="1">YOUR LOGO</text>
+</svg>
