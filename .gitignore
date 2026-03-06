@@ -14,9 +14,8 @@ output/
 *.xdv
 
 # Generated template files (created by make init-templates)
-# Uncomment if you want to track them in git:
-# templates/deck-template.pptx
-# templates/report-template.docx
+# These are tracked in git so the repo works without running make init-templates.
+# Regenerate with: make init-templates
 
 # macOS
 .DS_Store
